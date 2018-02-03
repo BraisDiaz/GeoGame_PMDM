@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    tools:context="org.danielcastelao.bdiaznunez.locationtracker.QRActivity">
+
+    <TextView
+
+        android:id="@+id/out"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="427dp"
+
+        android:fontFamily="casual"
+
+        android:text="Recibo String"
+
+        android:textColor="@color/viewfinder_border"
+
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="132dp" />
+
+    <Button
+
+        android:id="@+id/button"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="48dp"
+
+        android:layout_marginTop="20dp"
+
+        android:background="@color/viewfinder_laser"
+
+        android:text="Listo! Volver a la Activity principal"
+
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/out"
+        tools:layout_editor_absoluteX="57dp" />
+
+    <me.dm7.barcodescanner.zxing.ZXingScannerView
+        android:id="@+id/scan"
+        android:layout_width="385dp"
+        android:layout_height="400dp">
+
+    </me.dm7.barcodescanner.zxing.ZXingScannerView>
+
+</android.support.constraint.ConstraintLayout>

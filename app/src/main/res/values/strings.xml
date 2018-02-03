@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">LocationTracker</string>
+    <string name="title_activity_location">Map</string>
+    <string name="distancia">Distancia</string>
+    <string name="lat_long">Lat/long</string>
+    <string name="lector_qr">LECTOR QR</string>
+    <string name="hello_world">Hello World</string>
+</resources>
