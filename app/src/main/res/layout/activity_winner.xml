@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/background_light"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/textViewWin"
+        android:layout_width="match_parent"
+        android:layout_height="143dp"
+        android:fontFamily="monospace"
+        android:textAlignment="center"
+        android:textColor="?android:attr/colorPressedHighlight"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+
+        android:id="@+id/textViewTesoro"
+        android:layout_width="match_parent"
+        android:layout_height="229dp"
+        android:layout_gravity="center"
+        android:background="@drawable/tesoro"
+        android:text=""
+        android:textAlignment="center"
+        android:textSize="24sp"
+        />
+
+    <Button
+        android:id="@+id/btnVolver"
+        android:layout_width="match_parent"
+        android:layout_height="93dp"
+        android:layout_marginTop="50dp"
+        android:background="?android:attr/colorPressedHighlight"
+        android:fontFamily="casual"
+        android:text="VOLVER"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

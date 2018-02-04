@@ -4,51 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
+    android:background="@android:color/transparent"
     tools:context="org.danielcastelao.bdiaznunez.locationtracker.QRActivity">
-
-    <TextView
-
-        android:id="@+id/out"
-
-        android:layout_width="wrap_content"
-
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="427dp"
-
-        android:fontFamily="casual"
-
-        android:text="Recibo String"
-
-        android:textColor="@color/viewfinder_border"
-
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="132dp" />
-
-    <Button
-
-        android:id="@+id/button"
-
-        android:layout_width="wrap_content"
-
-        android:layout_height="48dp"
-
-        android:layout_marginTop="20dp"
-
-        android:background="@color/viewfinder_laser"
-
-        android:text="Listo! Volver a la Activity principal"
-
-        app:layout_constraintEnd_toEndOf="parent"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/out"
-        tools:layout_editor_absoluteX="57dp" />
 
     <me.dm7.barcodescanner.zxing.ZXingScannerView
         android:id="@+id/scan"
@@ -56,5 +13,19 @@
         android:layout_height="400dp">
 
     </me.dm7.barcodescanner.zxing.ZXingScannerView>
+
+    <Button
+
+        android:id="@+id/btnRegreso"
+        android:layout_width="184dp"
+        android:layout_height="113dp"
+        android:background="@drawable/back"
+        android:fontFamily="casual"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="399dp" />
+
 
 </android.support.constraint.ConstraintLayout>

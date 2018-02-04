@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/darkRed"
     android:orientation="vertical">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,37 +13,48 @@
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="380dp"
+        android:layout_height="312dp"
         tools:context="org.danielcastelao.bdiaznunez.locationtracker.LocationActivity" />
 
     <TextView
-        android:id="@+id/lat"
-        android:layout_width="wrap_content"
-        android:layout_height="18dp"
-        android:layout_marginTop="10dp"
-        android:text="Lat/long" />
+        android:id="@+id/txtDist1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:fontFamily="casual"
+        android:text=" Distancia al tesoro 1"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/dist"
-        android:layout_width="wrap_content"
-        android:layout_height="18dp"
-        android:layout_marginTop="10dp"
-        android:text="Distancia" />
+        android:id="@+id/txtDist2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="0dp"
+        android:fontFamily="casual"
+        android:text="Distancia al tesoro 2"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/recibo"
-        android:layout_width="wrap_content"
-        android:layout_height="18dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/hello_world" />
+        android:id="@+id/txtDist3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:fontFamily="casual"
+        android:text="Distancia al tesoro 3"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnQR"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/viewfinder_border"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_marginLeft="135dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/qr"
         android:fontFamily="casual"
-        android:text="@string/lector_qr"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="18sp"

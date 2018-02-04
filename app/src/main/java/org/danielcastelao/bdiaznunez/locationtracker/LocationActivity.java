@@ -33,7 +33,9 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
     private static final String TAG = "gpslog";
     private LocationManager mLocMgr;
     private Location posicionInicial;
-    private TextView textViewGPS, textViewDist;
+
+    private TextView textViewDist1, textViewDist2, textViewDist3;
+
     private Circle circle;
     private GoogleMap mMap;
 
@@ -53,31 +55,23 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 
     private static final long UPDATE_TIEMPO = 10000; // 10 sg
 
-    public Intent intento;
     private final static int codigo = 0;
-
-    //TextView para recibir dato desde QRActivity
-    private TextView reciboDato;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
-        textViewGPS = (TextView) findViewById(R.id.lat);
-        textViewDist = (TextView) findViewById(R.id.dist);
+        textViewDist1 = (TextView) findViewById(R.id.txtDist1);
+        textViewDist2 = (TextView) findViewById(R.id.txtDist2);
+        textViewDist3 = (TextView) findViewById(R.id.txtDist3);
+
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         mLocMgr = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-        String salutation = "adios";
-        intento = new Intent(LocationActivity.this, QRActivity.class);
-        intento.putExtra("salutation", salutation);
-
-        //Defino el cuadro de texto que recibirá el dato.
-        reciboDato = (TextView) findViewById(R.id.recibo);
 
         if ((ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) && (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
         mMap.setMyLocationEnabled(true);
@@ -87,16 +81,18 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 225);
 
             return;
+
         } else {
             Log.i(TAG, "Permisos necesarios OK!.");
             mLocMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, UPDATE_TIEMPO, UPDATE_DISTANCIA, locListener, Looper.getMainLooper());
         }
-        textViewGPS.setText("Lat " + " Long ");
 
         //Localizaciones de los tres tesoros.
         tesoro1 = new LatLng(42.237246,-8.714106);
         tesoro2 = new LatLng(42.237032,-8.714410);
         tesoro3 = new LatLng(42.23746,-8.715424);
+
+        intent = this.getIntent();
 
         Button btnQR = (Button) findViewById(R.id.btnQR);
         btnQR.setOnClickListener(new View.OnClickListener(){
@@ -104,10 +100,16 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
             public void onClick(View view){
 
                 Intent lectorQR = new Intent(getApplicationContext(), QRActivity.class);
-
-                //Al clickar en Lector QR inicio la segunda activity y espero un resultado devuelto.
-                //Identifico la llamada con un código, en este caso 0.
-                startActivityForResult(intento,codigo);
+                if(intent.getExtras() != null){
+                    lectorQR.putExtra("tes1", intent.getExtras().getBoolean("tes1"));
+                    lectorQR.putExtra("tes2", intent.getExtras().getBoolean("tes2"));
+                    lectorQR.putExtra("tes3", intent.getExtras().getBoolean("tes3"));
+                }else{
+                    lectorQR.putExtra("tes1",false);
+                    lectorQR.putExtra("tes2",false);
+                    lectorQR.putExtra("tes3",false);
+                }
+                startActivity(lectorQR);
 
             }
 
@@ -132,14 +134,9 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 
             Log.i(TAG, "Lat " + location.getLatitude() + " Long " + location.getLongitude());
 
-            textViewGPS.setText("Lat " + (float)location.getLatitude() + " Long " + (float)location.getLongitude());
-            textViewDist.setText("");
-
-            /*for(Location loc: locTesoros){
-
-            textViewDist.setText(textViewDist.getText()+"Localizacion: " + tesoroLoc.distanceTo(loc));
-            }*/
-
+            textViewDist1.setText("");
+            textViewDist2.setText("");
+            textViewDist3.setText("");
 
             // movemos la camara para la nueva posicion
 
@@ -184,7 +181,9 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
             inicio.setLongitude(danielCastelao.longitude);
 
 
-            textViewDist.setText("Distancia: "+ location.distanceTo(tes1));
+            textViewDist1.setText("Distancia al tesoro 1: "+ location.distanceTo(tes1));
+            textViewDist2.setText("Distancia al tesoro 2: "+ location.distanceTo(tes2));
+            textViewDist3.setText("Distancia al tesoro 3: "+ location.distanceTo(tes3));
 
     }
 
@@ -238,7 +237,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 
         mMap.setMyLocationEnabled(true);
         //Pintamos el círculo alrededor de la marca de inicio.
-        mMap.addCircle(new CircleOptions().center(danielCastelao).radius(300).strokeColor(Color.GREEN));
+        mMap.addCircle(new CircleOptions().center(danielCastelao).radius(300).strokeColor(Color.BLACK));
 
         //Añadimos tres marcas para las ubicaciones de los tesoros.
         mMap.addMarker(new MarkerOptions().position(tesoro1).title("Primer tesoro"));
@@ -249,32 +248,5 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 
 
     }
-
-    @Override
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Comprobamos si el resultado de la segunda actividad es "RESULT_OK".
-
-        if (resultCode == RESULT_OK) {
-
-            // Comprobamos el codigo de nuestra llamada
-
-            if (requestCode == codigo) {
-
-                // Recojemos el dato que viene en el Intent (se pasa por parámetro con el nombre de data)
-
-                // Rellenamos el TextView
-
-                reciboDato.setText(data.getExtras().getString("retorno"));
-
-            }
-
-        }
-
-    }
-
 }
 

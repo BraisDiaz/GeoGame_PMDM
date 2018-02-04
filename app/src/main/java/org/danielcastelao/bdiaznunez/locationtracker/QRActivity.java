@@ -16,9 +16,7 @@ import android.support.v4.app.ActivityCompat;
 
 import android.support.v4.content.ContextCompat;
 
-import android.util.Log;
-
-import android.widget.Toast;
+import android.widget.Button;
 
 import com.google.zxing.Result;
 
@@ -26,20 +24,14 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 public class QRActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
-    private ZXingScannerView mScannerView;
 
-    static final String TAG = "escaneoQR";
+    //Declaración de variables
 
     private static final int MY_PERMISSIONS = 1;
-
     private Result lastResult;
-
-    private Intent intento;
-
+    private Intent intentoQR;
     TextView out;
     ZXingScannerView scan;
 
@@ -47,23 +39,12 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
 
     public void onCreate(Bundle savedInstanceState) {
 
+        //Tenemos un layout activity_qr que contiene el scanner scan de la clase ZXingScannerView.
         super.onCreate(savedInstanceState);
-
-        //scan = new ZXingScannerView(this);
-
-
         setContentView(R.layout.activity_qr);
         scan = (ZXingScannerView) findViewById(R.id.scan);
 
-        Log.v(TAG, "Inicializando scanner");
-
-        intento = getIntent();
-
-        String salutation = intento.getExtras().getString("salutation");
-
-        out = (TextView) findViewById(R.id.out);
-
-        //out.setText(salutation);
+        intentoQR = this.getIntent();
 
         // Pido permiso para usar la CAMARA
 
@@ -105,29 +86,30 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
             }
 
         }
-    }
 
 
-    public void devuelta(){
+        //Vuelve a la ventana del mapa si pulsamos el botón de regreso.
+        Button botonRegreso = (Button) findViewById(R.id.btnRegreso);
+        botonRegreso.setOnClickListener(new View.OnClickListener() {
 
-        // Metemos el dato que queremos enviar a la otra Activity
+            @Override
+            public void onClick(View View) {
 
-        intento.putExtra("retorno", "Hasta luego Lucas" );
+                Intent intent = new Intent(getApplicationContext(), LocationActivity.class);
 
-        // Dejamos configurado el resultado para que la otra Activity lo pueda recojer
+                intent.putExtra("tes1", intentoQR.getExtras().getBoolean("tes1"));
 
-        // mandamos un resultCode RESULT_OK, conforme todo fue bien
+                intent.putExtra("tes2", intentoQR.getExtras().getBoolean("tes2"));
 
-        // podriamos utilizar otro tipo de resultCode para informar del proceso realizado,
+                intent.putExtra("tes3", intentoQR.getExtras().getBoolean("tes3"));
 
-        // https://developer.android.com/reference/android/app/Activity.html#RESULT_CANCELED
+                startActivity(intent);
 
-        setResult(RESULT_OK, intento);
+                onStop();
 
-        // cerramos la Activity
+            }
 
-        finish();
-
+        });
     }
 
     @Override
@@ -153,7 +135,6 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
 
     }
 
-
     @Override
 
     protected void onStop() {
@@ -171,33 +152,24 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
 
         if(rawResult!=lastResult) {
 
-            // Do something with the result here
-
-            Log.v(TAG, rawResult.getText()); // Prints scan results
-
-            Log.v(TAG, rawResult.getBarcodeFormat().toString()); // Prints the scan format (qrcode, pdf417 etc.)
-
-
-
             // If you would like to resume scanning, call this method below:
-
+            lastResult = rawResult;
             scan.resumeCameraPreview(this);
 
             // Instancio el Intent para mandar el resultado del QR
 
-            Intent intento= new Intent();
+            Intent winner = new Intent(getApplicationContext(),Winner.class);
 
-            intento.putExtra("retorno", rawResult.getText() );
+            winner.putExtra("LecturaQR", lastResult.getText());
+            winner.putExtra("tes1", intentoQR.getExtras().getBoolean("tes1"));
+            winner.putExtra("tes2", intentoQR.getExtras().getBoolean("tes2"));
+            winner.putExtra("tes3", intentoQR.getExtras().getBoolean("tes3"));
 
-            setResult(RESULT_OK, intento);
-
-            // cierro la cámara
-
-            finish();
+            startActivity(winner);
 
         }
 
     }
-
 }
+
 
