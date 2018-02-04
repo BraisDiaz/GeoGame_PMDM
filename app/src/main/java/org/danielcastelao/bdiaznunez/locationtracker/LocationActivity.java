@@ -2,6 +2,7 @@ package org.danielcastelao.bdiaznunez.locationtracker;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -10,10 +11,13 @@ import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.content.Intent;
 
 import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -84,6 +88,21 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
             mLocMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, UPDATE_TIEMPO, UPDATE_DISTANCIA, locListener, Looper.getMainLooper());
         }
         textViewGPS.setText("Lat " + " Long ");
+
+        Button btnQR = (Button) findViewById(R.id.btnQR);
+        btnQR.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+                Intent lectorQR = new Intent(getApplicationContext(), QRActivity.class);
+
+                //Al clickar en Lector QR inicio la segunda activity y espero un resultado devuelto.
+                //Identifico la llamada con un código, en este caso 0.
+                startActivityForResult(intento,codigo);
+
+            }
+
+        });
 
     }
 
@@ -178,6 +197,9 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         }
 
         mMap.setMyLocationEnabled(true);
+        //Pintamos el círculo alrededor de la marca de inicio.
+        mMap.addCircle(new CircleOptions().center(danielCastelao).radius(300).strokeColor(Color.GREEN));
+
 
     }
 
