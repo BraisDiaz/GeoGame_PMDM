@@ -37,6 +37,10 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
     private Circle circle;
     private GoogleMap mMap;
 
+    private LatLng tesoro1;
+    private LatLng tesoro2;
+    private LatLng tesoro3;
+
     final LatLng danielCastelao = new LatLng(42.236574, -8.714311);
 
     private Intent intent;
@@ -88,6 +92,11 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
             mLocMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, UPDATE_TIEMPO, UPDATE_DISTANCIA, locListener, Looper.getMainLooper());
         }
         textViewGPS.setText("Lat " + " Long ");
+
+        //Localizaciones de los tres tesoros.
+        tesoro1 = new LatLng(42.237246,-8.714106);
+        tesoro2 = new LatLng(42.237032,-8.714410);
+        tesoro3 = new LatLng(42.23746,-8.715424);
 
         Button btnQR = (Button) findViewById(R.id.btnQR);
         btnQR.setOnClickListener(new View.OnClickListener(){
@@ -146,6 +155,37 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
+
+            Location tes1 =new Location("");
+
+            tes1.setLatitude(tesoro1.latitude);
+
+            tes1.setLongitude(tesoro1.longitude);
+
+
+            Location tes2=new Location("");
+
+            tes2.setLatitude(tesoro2.latitude);
+
+            tes2.setLongitude(tesoro2.longitude);
+
+
+            Location tes3=new Location("");
+
+            tes3.setLatitude(tesoro3.latitude);
+
+            tes3.setLongitude(tesoro3.longitude);
+
+
+            Location inicio =new Location("");
+
+            inicio.setLatitude(danielCastelao.latitude);
+
+            inicio.setLongitude(danielCastelao.longitude);
+
+
+            textViewDist.setText("Distancia: "+ location.distanceTo(tes1));
+
     }
 
         @Override
@@ -199,6 +239,13 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
         mMap.setMyLocationEnabled(true);
         //Pintamos el círculo alrededor de la marca de inicio.
         mMap.addCircle(new CircleOptions().center(danielCastelao).radius(300).strokeColor(Color.GREEN));
+
+        //Añadimos tres marcas para las ubicaciones de los tesoros.
+        mMap.addMarker(new MarkerOptions().position(tesoro1).title("Primer tesoro"));
+
+        mMap.addMarker(new MarkerOptions().position(tesoro2).title("Segundo tesoro"));
+
+        mMap.addMarker(new MarkerOptions().position(tesoro3).title("Tercer tesoro"));
 
 
     }
